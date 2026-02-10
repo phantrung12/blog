@@ -49,7 +49,7 @@ async function bootstrap() {
   setupSwagger(app);
 
   // Start server
-  const port = configService.get<number>('port') || 3000;
+  const port = configService.get<number>('port') || 8080;
   await app.listen(port);
 
   console.log(`🚀 Blog API is running on: http://localhost:${port}`);
@@ -57,4 +57,13 @@ async function bootstrap() {
   console.log(`🔒 API prefix: /${apiPrefix}/${apiVersion}`);
 }
 
-bootstrap();
+bootstrap()
+  .then(() => {
+    console.log('🚀 Blog API is running on: http://localhost:8080');
+    console.log('📚 Swagger docs: http://localhost:8080/api/docs');
+    console.log('🔒 API prefix: /api/v1');
+  })
+  .catch((error) => {
+    console.error('❌ Blog API failed to start:', error);
+    process.exit(1);
+  });
